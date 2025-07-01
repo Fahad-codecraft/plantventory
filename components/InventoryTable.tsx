@@ -13,6 +13,7 @@ import { Combobox } from "./ui/combo-box";
 import { useState } from "react";
 import { getPlants } from "@/actions/plant.actions";
 import { useRouter } from "next/navigation";
+import AlertDialogDemo from "./CreateDialog";
 
 
 type Plant = Awaited<ReturnType<typeof getPlants>>;
@@ -32,7 +33,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 py-4">
-        <div className="relative w-full">
+        <div className="relative max-w-sm w-full">
           <Input
             placeholder="Filter plants..."
             className="pl-10"
@@ -45,7 +46,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
         <Combobox value={selectedCategory} onChange={(val) => setSelectedCategory(val)} />
 
 
-        <h1>Create Table</h1>
+        <AlertDialogDemo />
       </div>
 
       <Table>
