@@ -17,19 +17,25 @@ import { Label } from "./ui/label";
 import { Combobox } from "./ui/combo-box";
 import { Textarea } from "./ui/textarea";
 import React, { useState } from "react";
-import { createPlant } from "@/actions/plant.actions";
+import { createPlant, editPlant, getPlantById } from "@/actions/plant.actions";
 import toast from "react-hot-toast";
 
-export default function CreateDialog() {
+type Plant = NonNullable<Awaited<ReturnType<typeof getPlantById>>>
+
+interface EditPlantProps {
+  plant: Plant
+}
+
+export default function EditDialog({plant}: EditPlantProps) {
 
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    category: "",
-    stock: 1,
-    price: 1,
-    userId: "",
-    imageUrl: "",
+    name: plant?.name.trim(),
+    description: (plant?.description || "").trim(),
+    category: plant.category.trim(),
+    stock: plant.stock,
+    price: plant.price,
+    userId: plant.userId.trim(),
+    imageUrl: plant.imageUrl || "",
   });
 
   const handleChange = (field: string, value: string | number) => {
@@ -39,12 +45,12 @@ export default function CreateDialog() {
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const newPlant = await createPlant(formData);
-      console.log("plant created:", newPlant);
-      toast.success("Plant added successfully!");
+      const newPlant = await editPlant(plant.id, formData);
+      console.log("plant edited:", newPlant);
+      toast.success("Plant edited successfully!");
     } catch (error) {
-      console.error("Error adding plant:", error);
-      toast.error("Failed to add plant. Please try again.");
+      console.error("Error editing plant:", error);
+      toast.error("Failed to edit plant. Please try again.");
     }
   }
 
@@ -55,7 +61,7 @@ export default function CreateDialog() {
           variant={"ghost"}
           className="ml-auto flex items-center gap-2"
         >
-          <span className="hidden lg:inline">Add Plant</span>
+          <span className="hidden lg:inline">Edit Plant</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

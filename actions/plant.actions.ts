@@ -56,3 +56,23 @@ export async function createPlant(data: Prisma.PlantsCreateInput){
     
   }
 }
+
+export async function editPlant(
+  id: string,
+  data: Prisma.PlantsUpdateInput
+) {
+  try {
+    const currentUserId = await getUserId();
+    const updatedPlant = await prisma.plants.update({
+      where: {id},
+      data: {
+        ...data
+,
+userId: currentUserId,     }
+    });
+    revalidatePath("/plants");
+  } catch (error) {
+    console.error("Error updating plant:", error);
+    throw new Error("Failed to update plant");
+  }
+}

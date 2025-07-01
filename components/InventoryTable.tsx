@@ -8,12 +8,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "./ui/input";
-import { Search } from "lucide-react";
+import { Edit, Search } from "lucide-react";
 import { Combobox } from "./ui/combo-box";
 import { useState } from "react";
 import { getPlants } from "@/actions/plant.actions";
 import { useRouter } from "next/navigation";
-import AlertDialogDemo from "./CreateDialog";
+import CreateDialog from "./CreateDialog";
+import EditDialog from "./EditDialog";
 
 
 type Plant = Awaited<ReturnType<typeof getPlants>>;
@@ -46,7 +47,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
         <Combobox value={selectedCategory} onChange={(val) => setSelectedCategory(val)} />
 
 
-        <AlertDialogDemo />
+        <CreateDialog />
       </div>
 
       <Table>
@@ -74,8 +75,9 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
                 <TableCell>{plant.price}</TableCell>
                 <TableCell className="font-bold">{plant.stock}</TableCell>
                 <TableCell className="text-right">
-                  <div className="flex justify-end space-x-4">
-                    <h1>Edit Button</h1>
+                  <div className="flex justify-end space-x-4"
+                  onClick={(e) => e.stopPropagation()}>
+                    <EditDialog plant={plant} />
                     <h1>Delete Button</h1>
                   </div>
                 </TableCell>
