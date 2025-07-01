@@ -1,25 +1,31 @@
+import { getPlants } from '@/actions/plant.actions';
 import InventoryTable from '@/components/InventoryTable';
 import { stackServerApp } from '@/stack';
-import { SignIn, SignUp } from '@stackframe/stack';
+import { SignUp } from '@stackframe/stack';
 import React from 'react'
 
 async function page() {
   const user = await stackServerApp.getUser();
-    const app = stackServerApp.urls;
+  const app = stackServerApp.urls;
+  const plants = await getPlants();
+
   return (
     <>
-    {user ? (
-      <div className="mt-7 max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-10 gap-6">
-        <InventoryTable />
-      </div>
-    ) : (
+      {user ? (
+        <div className="mt-7 max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-10 gap-6">
+          <div className='lg:col-span-full'>
 
-      <div className="flex justify-center mt-20 items-center">
+            <InventoryTable plants={plants}/>
+          </div>
+        </div>
+      ) : (
 
-        <SignUp />
-      </div>
+        <div className="flex justify-center mt-20 items-center">
 
-    )}
+          <SignUp />
+        </div>
+
+      )}
     </>
   )
 }
