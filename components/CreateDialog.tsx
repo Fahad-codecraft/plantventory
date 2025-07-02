@@ -19,6 +19,7 @@ import { Textarea } from "./ui/textarea";
 import React, { useState } from "react";
 import { createPlant } from "@/actions/plant.actions";
 import toast from "react-hot-toast";
+import ImageUpload from "./ImageUpload";
 
 export default function CreateDialog() {
 
@@ -91,18 +92,37 @@ export default function CreateDialog() {
             value={formData.description}
             onChange={(e) => handleChange("description", e.target.value)}
           />
-          <div>
-            <Label htmlFor="price">Price</Label>
-            <Input
-              id="price"
-              type="number"
-              placeholder="Enter price"
-              value={formData.price}
-              onChange={(e) => handleChange("price", Number(e.target.value))}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="price">Price</Label>
+              <Input
+                id="price"
+                type="number"
+                placeholder="Enter price"
+                value={formData.price}
+                onChange={(e) => handleChange("price", Number(e.target.value))}
+              />
+            </div>
+            <div>
+              <Label htmlFor="price">Stock</Label>
+              <Input
+                id="stock"
+                type="number"
+                placeholder="Enter stock"
+                value={formData.stock}
+                onChange={(e) => handleChange("stock", Number(e.target.value))}
+              />
+            </div>
+          </div>
+          {/* Image Upload */}
+
+          <div className="py-5">
+            <ImageUpload
+              endpoint="postImage"
+              value={formData.imageUrl}
+              onChange={(url) => handleChange("imageUrl", url)}
             />
           </div>
-          <h1>Image upload</h1>
-
 
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
