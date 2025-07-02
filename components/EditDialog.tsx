@@ -19,6 +19,7 @@ import { Textarea } from "./ui/textarea";
 import React, { useState } from "react";
 import { createPlant, editPlant, getPlantById } from "@/actions/plant.actions";
 import toast from "react-hot-toast";
+import ImageUpload from "./ImageUpload";
 
 type Plant = NonNullable<Awaited<ReturnType<typeof getPlantById>>>
 
@@ -26,7 +27,7 @@ interface EditPlantProps {
   plant: Plant
 }
 
-export default function EditDialog({plant}: EditPlantProps) {
+export default function EditDialog({ plant }: EditPlantProps) {
 
   const [formData, setFormData] = useState({
     name: plant?.name.trim(),
@@ -107,7 +108,13 @@ export default function EditDialog({plant}: EditPlantProps) {
               onChange={(e) => handleChange("price", Number(e.target.value))}
             />
           </div>
-          <h1>Image upload</h1>
+          <div className="py-5">
+            <ImageUpload
+              endpoint="postImage"
+              value={formData.imageUrl}
+              onChange={(url) => handleChange("imageUrl", url)}
+            />
+          </div>
 
 
           <AlertDialogFooter>
