@@ -53,7 +53,7 @@ export default function CreateDialog() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant={"ghost"}
+          variant={"default"}
           className="ml-auto flex items-center gap-2"
         >
           <span className="hidden lg:inline">Add Plant</span>

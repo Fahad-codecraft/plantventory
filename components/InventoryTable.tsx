@@ -76,7 +76,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
                 <TableCell>{plant.price}</TableCell>
                 <TableCell className="font-bold">{plant.stock}</TableCell>
                 <TableCell className="text-right">
-                  <div className="flex justify-end space-x-4"
+                  <div className="flex justify-end"
                   onClick={(e) => e.stopPropagation()}>
                     <EditDialog plant={plant} />
                     <DeleteDialog plant={plant} />
