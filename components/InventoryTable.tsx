@@ -15,6 +15,7 @@ import { getPlants } from "@/actions/plant.actions";
 import { useRouter } from "next/navigation";
 import CreateDialog from "./CreateDialog";
 import EditDialog from "./EditDialog";
+import DeleteDialog from "./DeleteDialog";
 
 
 type Plant = Awaited<ReturnType<typeof getPlants>>;
@@ -78,7 +79,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
                   <div className="flex justify-end space-x-4"
                   onClick={(e) => e.stopPropagation()}>
                     <EditDialog plant={plant} />
-                    <h1>Delete Button</h1>
+                    <DeleteDialog plant={plant} />
                   </div>
                 </TableCell>
               </TableRow>
